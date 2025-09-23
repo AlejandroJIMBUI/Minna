@@ -6,6 +6,6 @@ import react from '@astrojs/react';
 export default defineConfig({
   integrations: [react()],
   output: 'static',
-  site: 'https://user.github.io',
-  base: '/repo-name',
+  site: 'https://alejandrojimbui.github.io',
+  //base: '/repo-name',
 });

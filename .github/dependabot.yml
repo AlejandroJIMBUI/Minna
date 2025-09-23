@@ -1,0 +1,10 @@
+version: 2
+updates:
+  # Actualiza dependencias de npm
+  - package-ecosystem: "npm"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+    labels:
+      - "dependencies"
+      - "automated"
