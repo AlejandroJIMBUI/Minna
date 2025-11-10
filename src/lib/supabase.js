@@ -14,20 +14,63 @@ export const supabase = createClient(supabaseUrl, supabaseAnonKey, {
 // FUNCIONES DE AUTENTICACION
 
 // Registro de nuevo usuario
+// Registro de nuevo usuario CON creación de perfil
 export const signUp = async (email, password, userData) => {
-  const { data, error } = await supabase.auth.signUp({
-    email,
-    password,
-    options: {
-      data: {
-        username: userData.username,
-        full_name: userData.fullName
+  try {
+    console.log('Starting signup process for:', email);
+    
+    // 1. Crear usuario en Auth
+    const { data, error } = await supabase.auth.signUp({
+      email,
+      password,
+      options: {
+        data: {
+          username: userData.username,
+          full_name: userData.fullName
+        }
+      }
+    })
+
+    if (error) {
+      console.error('Auth signup error:', error);
+      throw error;
+    }
+
+    console.log('Auth user created:', data.user?.id);
+
+    // 2. Si el usuario se creó correctamente, crear perfil
+    if (data.user) {
+      try {
+        const { error: profileError } = await supabase
+          .from('profiles')
+          .insert([
+            {
+              id: data.user.id,
+              username: userData.username,
+              full_name: userData.fullName,
+              avatar_url: null,
+              bio: null,
+              created_at: new Date().toISOString(),
+              updated_at: new Date().toISOString()
+            }
+          ])
+
+        if (profileError) {
+          console.warn('Profile creation warning:', profileError.message);
+          // No lanzamos error para no romper el registro principal
+        } else {
+          console.log('Profile created successfully for user:', data.user.id);
+        }
+      } catch (profileError) {
+        console.warn('Profile creation error (non-critical):', profileError);
       }
     }
-  })
 
-  if (error) throw error
-  return data
+    return data
+  } catch (error) {
+    console.error('Signup process failed:', error);
+    throw error;
+  }
 }
 
 // Inicio de sesión

@@ -1,16 +1,45 @@
 ---
-
+import Layout from "../layouts/Layout.astro";
 ---
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-	</body>
-</html>
+<Layout title="Minna">
+  <div class="loading-page">
+    <div class="loading-content">
+      <p>Redirigiendo...</p>
+    </div>
+  </div>
+</Layout>
+
+<script>
+  // Redirigir automáticamente basado en autenticación
+  import { initAuth, getCurrentUser } from "../scripts/auth.js";
+
+  document.addEventListener("DOMContentLoaded", async () => {
+    await initAuth();
+
+    // Pequeño delay para asegurar que la autenticación se inicialice
+    setTimeout(() => {
+      const user = getCurrentUser();
+      if (user) {
+        window.location.href = "/dashboard";
+      } else {
+        window.location.href = "/login";
+      }
+    }, 500);
+  });
+</script>
+
+<style>
+  .loading-page {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  }
+
+  .loading-content {
+    text-align: center;
+    color: white;
+  }
+</style>

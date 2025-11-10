@@ -1,0 +1,29 @@
+---
+import Layout from "../layouts/Layout.astro";
+import SignUpForm from "../components/auth/SignUpForm.astro";
+---
+
+<Layout title="Registrarse">
+  <div class="auth-page">
+    <main class="auth-main">
+      <SignUpForm />
+    </main>
+  </div>
+</Layout>
+
+<style>
+  .auth-page {
+    min-height: 100vh;
+    background: #32313b;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .auth-main {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem 1rem;
+  }
+</style>

@@ -1,0 +1,35 @@
+---
+// Layout básico para toda la aplicación
+---
+
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Minna</title>
+    <link rel="stylesheet" href="/styles/auth.css" />
+  </head>
+  <body>
+    <div id="app">
+      <slot />
+    </div>
+
+    <!-- Cargar los scripts de autenticación -->
+    <script type="module" src="/scripts/auth.js"></script>
+  </body>
+</html>
+
+<style>
+  body {
+    margin: 0;
+    padding: 0;
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+    background: #f5f5f5;
+    min-height: 100vh;
+  }
+
+  #app {
+    min-height: 100vh;
+  }
+</style>
