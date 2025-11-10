@@ -1,8 +1,9 @@
-name: Deploy Astro to GitHub Pages
+name: Deploy to GitHub Pages
 
 on:
   push:
     branches: [main]
+  pull_request: # ← ESTA LÍNEA NUEVA EJECUTA EL WORKFLOW EN PRs
   workflow_dispatch:
 
 permissions:
@@ -26,13 +27,13 @@ jobs:
       - name: Install dependencies
         run: npm install
 
-      - name: Build Astro site
+      - name: Build
         run: npm run build
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v2
         with:
-          path: "./dist" # Astro genera los archivos en /dist por defecto
+          path: "./dist"
 
   deploy:
     environment:
@@ -40,6 +41,8 @@ jobs:
       url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
     needs: build
+    # ESTA CONDICIÓN EVITA QUE DEPLOY SE EJECUTE EN PRs
+    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
     steps:
       - name: Deploy to GitHub Pages
         id: deployment
