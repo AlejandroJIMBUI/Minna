@@ -1,43 +1,31 @@
 ---
 import Layout from "../layouts/Layout.astro";
+
+const { session } = Astro.locals;
+
+if (!session) {
+  return Astro.redirect("/login");
+}
 ---
 
 <Layout title="Dashboard">
   <div class="dashboard">
     <header class="dashboard-header">
-      <button id="logoutButton" class="logout-btn">Cerrar Sesión</button>
+      <form method="POST" action="/api/auth/logout">
+        <button type="submit" class="logout-btn">Cerrar Sesión</button>
+      </form>
     </header>
 
     <main class="dashboard-main">
       <div class="welcome-card">
         <h1>¡Bienvenido al Dashboard!</h1>
         <p>Has iniciado sesión correctamente.</p>
+        <p>Email: {session.user.email}</p>
         <p><em>Epic 4: Página principal - En desarrollo</em></p>
       </div>
     </main>
   </div>
 </Layout>
-
-<script type="module">
-  import { logout, getCurrentUser } from "../scripts/auth.js";
-
-  document.addEventListener("DOMContentLoaded", () => {
-    const user = getCurrentUser();
-    if (!user) {
-      window.location.href = "/login";
-      return;
-    }
-
-    document
-      .getElementById("logoutButton")
-      .addEventListener("click", async () => {
-        const result = await logout();
-        if (result.success) {
-          window.location.href = "/login";
-        }
-      });
-  });
-</script>
 
 <style>
   .dashboard {
@@ -47,7 +35,7 @@ import Layout from "../layouts/Layout.astro";
 
   .dashboard-header {
     display: flex;
-    justify-content: space-between;
+    justify-content: flex-end;
     align-items: center;
     padding: 1rem 2rem;
     background: white;

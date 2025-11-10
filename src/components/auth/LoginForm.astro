@@ -5,7 +5,7 @@
 <div class="auth-form-container">
   <h2>Iniciar Sesión</h2>
 
-  <form id="loginForm" class="auth-form">
+  <form method="POST" action="/api/auth/login" class="auth-form">
     <div class="form-group">
       <label for="email">Correo electrónico</label>
       <input
@@ -29,9 +29,7 @@
       />
     </div>
 
-    <div id="loginError" class="error-message" style="display: none;"></div>
-
-    <button type="submit" id="loginButton" class="auth-button">
+    <button type="submit" class="auth-button">
       Iniciar Sesión
     </button>
   </form>
@@ -47,61 +45,6 @@
     </p>
   </div>
 </div>
-
-<script type="module">
-  // Usamos TU lógica de autenticación
-  import { login } from "/scripts/auth.js";
-
-  document.getElementById("loginForm").addEventListener("submit", async (e) => {
-    e.preventDefault();
-
-    const form = e.target;
-    const button = document.getElementById("loginButton");
-    const errorDiv = document.getElementById("loginError");
-
-    const formData = new FormData(form);
-    const email = formData.get("email");
-    const password = formData.get("password");
-
-    // Validaciones
-    if (!email || !password) {
-      showError(errorDiv, "Por favor completa todos los campos");
-      return;
-    }
-
-    // Estado de carga
-    button.disabled = true;
-    button.textContent = "Iniciando sesión...";
-    hideError(errorDiv);
-
-    try {
-      // Usamos TU función de login
-      const result = await login(email, password);
-
-      if (result.success) {
-        // Redirección automática manejada por auth.js
-        console.log("Login exitoso, redirigiendo...");
-      } else {
-        showError(errorDiv, result.error);
-      }
-    } catch (error) {
-      showError(errorDiv, "Error inesperado al iniciar sesión");
-      console.error("Login error:", error);
-    } finally {
-      button.disabled = false;
-      button.textContent = "Iniciar Sesión";
-    }
-  });
-
-  function showError(errorDiv, message) {
-    errorDiv.textContent = message;
-    errorDiv.style.display = "block";
-  }
-
-  function hideError(errorDiv) {
-    errorDiv.style.display = "none";
-  }
-</script>
 
 <style>
   /* Tus estilos CSS aquí */

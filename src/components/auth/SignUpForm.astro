@@ -5,7 +5,7 @@
 <div class="auth-form-container">
   <h2>Crear Cuenta</h2>
 
-  <form id="signupForm" class="auth-form">
+  <form method="POST" action="/api/auth/signup" class="auth-form">
     <div class="form-group">
       <label for="username">Nombre de usuario</label>
       <input
@@ -53,20 +53,7 @@
       />
     </div>
 
-    <div class="form-group">
-      <label for="confirmPassword">Confirmar contraseña</label>
-      <input
-        type="password"
-        id="confirmPassword"
-        name="confirmPassword"
-        required
-        placeholder="Repite tu contraseña"
-      />
-    </div>
-
-    <div id="signupError" class="error-message" style="display: none;"></div>
-
-    <button type="submit" id="signupButton" class="auth-button">
+    <button type="submit" class="auth-button">
       Registrarse
     </button>
   </form>
@@ -79,96 +66,6 @@
     </p>
   </div>
 </div>
-
-<script type="module">
-  import { register } from "../scripts/auth.js";
-
-  document
-    .getElementById("signupForm")
-    .addEventListener("submit", async (e) => {
-      e.preventDefault();
-
-      const form = e.target;
-      const button = document.getElementById("signupButton");
-      const errorDiv = document.getElementById("signupError");
-
-      const formData = new FormData(form);
-      const userData = {
-        username: formData.get("username"),
-        fullName: formData.get("fullName"),
-        email: formData.get("email"),
-        password: formData.get("password"),
-        confirmPassword: formData.get("confirmPassword"),
-      };
-
-      // Validaciones
-      if (
-        !userData.email ||
-        !userData.password ||
-        !userData.username ||
-        !userData.fullName
-      ) {
-        showError(errorDiv, "Por favor completa todos los campos");
-        return;
-      }
-
-      if (userData.password !== userData.confirmPassword) {
-        showError(errorDiv, "Las contraseñas no coinciden");
-        return;
-      }
-
-      if (userData.password.length < 6) {
-        showError(errorDiv, "La contraseña debe tener al menos 6 caracteres");
-        return;
-      }
-
-      if (!userData.username.match(/^[a-zA-Z0-9_]+$/)) {
-        showError(
-          errorDiv,
-          "El nombre de usuario solo puede contener letras, números y guiones bajos"
-        );
-        return;
-      }
-
-      // Estado de carga
-      button.disabled = true;
-      button.textContent = "Creando cuenta...";
-      hideError(errorDiv);
-
-      try {
-        // Usamos TU función de registro
-        const result = await register(userData.email, userData.password, {
-          username: userData.username,
-          fullName: userData.fullName,
-        });
-
-        if (result.success) {
-          console.log("Registro exitoso, redirigiendo...");
-          // Mostrar mensaje de éxito
-          showError(errorDiv, "¡Cuenta creada! Redirigiendo...", "success");
-        } else {
-          showError(errorDiv, result.error);
-        }
-      } catch (error) {
-        showError(errorDiv, "Error inesperado al crear la cuenta");
-        console.error("Signup error:", error);
-      } finally {
-        button.disabled = false;
-        button.textContent = "Registrarse";
-      }
-    });
-
-  function showError(errorDiv, message, type = "error") {
-    errorDiv.textContent = message;
-    errorDiv.style.display = "block";
-    errorDiv.className =
-      type === "success" ? "success-message" : "error-message";
-  }
-
-  function hideError(errorDiv) {
-    errorDiv.style.display = "none";
-  }
-</script>
 
 <style>
   .auth-form-container {
