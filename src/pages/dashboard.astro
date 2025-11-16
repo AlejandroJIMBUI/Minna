@@ -1,7 +1,9 @@
 ---
 import Layout from "../layouts/Layout.astro";
 
-const { session } = Astro.locals;
+// Usar destructuring seguro
+const session = Astro.locals.session;
+const user = Astro.locals.user;
 
 if (!session) {
   return Astro.redirect("/login");
@@ -20,7 +22,7 @@ if (!session) {
       <div class="welcome-card">
         <h1>¡Bienvenido al Dashboard!</h1>
         <p>Has iniciado sesión correctamente.</p>
-        <p>Email: {session.user.email}</p>
+        <p>Email: {user?.email}</p>
         <p><em>Epic 4: Página principal - En desarrollo</em></p>
       </div>
     </main>
