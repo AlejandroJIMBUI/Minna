@@ -12,6 +12,7 @@
   "dependencies": {
     "@supabase/ssr": "^0.7.0",
     "@supabase/supabase-js": "^2.81.1",
+    "@supabase/supabase-js": "^2.57.4",
     "astro": "^5.13.10",
     "date-fns": "^4.1.0",
     "react-icons": "^5.5.0"
