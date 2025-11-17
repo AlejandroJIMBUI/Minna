@@ -4,5 +4,5 @@ import { defineConfig } from 'astro/config';
 export default defineConfig({
   output: 'server',
   site: 'https://alejandrojimbui.github.io',
-  // base: '/Minna/', // ← Comentado para desarrollo
+  base: '/Minna/',
 });
