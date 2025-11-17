@@ -1,7 +1,5 @@
 ---
-// Acceder directamente a las propiedades
 const session = Astro.locals.session;
-const { session } = Astro.locals;
 
 if (session) {
   return Astro.redirect("/dashboard");

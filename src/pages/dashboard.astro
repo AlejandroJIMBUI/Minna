@@ -1,10 +1,8 @@
 ---
 import Layout from "../layouts/Layout.astro";
 
-// Usar destructuring seguro
 const session = Astro.locals.session;
 const user = Astro.locals.user;
-const { session } = Astro.locals;
 
 if (!session) {
   return Astro.redirect("/login");
@@ -24,7 +22,6 @@ if (!session) {
         <h1>¡Bienvenido al Dashboard!</h1>
         <p>Has iniciado sesión correctamente.</p>
         <p>Email: {user?.email}</p>
-        <p>Email: {session.user.email}</p>
         <p><em>Epic 4: Página principal - En desarrollo</em></p>
       </div>
     </main>
