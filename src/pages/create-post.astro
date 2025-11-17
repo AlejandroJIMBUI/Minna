@@ -1,0 +1,74 @@
+---
+export const prerender = false;
+import Layout from "../layouts/Layout.astro";
+import CreatePostForm from "../components/posts/CreatePostForm.astro";
+
+const session = Astro.locals.session;
+const user = Astro.locals.user;
+
+if (!session || !user) {
+  return Astro.redirect("/login");
+}
+
+const error = Astro.url.searchParams.get("error");
+const message = Astro.url.searchParams.get("message");
+---
+
+<Layout title="Crear Publicación" showHeader={false}>
+  <div class="create-post-page">
+    <main class="page-main">
+      <div class="create-post-container">
+        <div class="create-post-header">
+          <h1>Crear Nueva Publicación</h1>
+          <p>Comparte tus pensamientos con la comunidad</p>
+        </div>
+
+        <!-- Pasar las variables como props -->
+        <CreatePostForm error={error} message={message} />
+      </div>
+    </main>
+  </div>
+</Layout>
+
+<style>
+  .create-post-page {
+    min-height: 100vh;
+    background: #32313b;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem 1rem;
+  }
+
+  .page-main {
+    width: 100%;
+    max-width: 800px;
+    margin: 0 auto;
+  }
+
+  .create-post-container {
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+  }
+
+  .create-post-header {
+    background: linear-gradient(135deg, #5f6ee7 0%, #4c60aa 100%);
+    color: white;
+    padding: 2.5rem 3rem;
+    text-align: center;
+  }
+
+  .create-post-header h1 {
+    margin: 0 0 0.5rem 0;
+    font-size: 2.2rem;
+    font-weight: 700;
+  }
+
+  .create-post-header p {
+    margin: 0;
+    font-size: 1.1rem;
+    opacity: 0.9;
+  }
+</style>

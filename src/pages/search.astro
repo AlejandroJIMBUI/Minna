@@ -1,0 +1,192 @@
+---
+export const prerender = false;
+import Layout from "../layouts/Layout.astro";
+import { supabase } from "../lib/supabase";
+
+const session = Astro.locals.session;
+const user = Astro.locals.user;
+
+if (!session || !user) {
+  return Astro.redirect("/login");
+}
+
+const query = Astro.url.searchParams.get("q") || "";
+
+let searchResults = [];
+
+if (query) {
+  // Buscar usuarios por username o nombre
+  const { data } = await supabase
+    .from("profiles")
+    .select("*")
+    .or(`username.ilike.%${query}%,full_name.ilike.%${query}%`)
+    .limit(10);
+
+  searchResults = data || [];
+}
+---
+
+<Layout title={`Buscar: ${query}`}>
+  <div class="search-page">
+    <header class="page-header">
+      <a href="/dashboard" class="back-link">← Volver al Dashboard</a>
+    </header>
+
+    <main class="search-main">
+      <div class="search-container">
+        <form method="GET" action="/search" class="search-form-large">
+          <input
+            type="text"
+            name="q"
+            value={query}
+            placeholder="Buscar usuarios por nombre o username..."
+            class="search-input-large"
+          />
+          <button type="submit" class="search-btn-large">Buscar</button>
+        </form>
+
+        {
+          query && (
+            <div class="search-results">
+              <h2>Resultados para "{query}"</h2>
+
+              {searchResults.length > 0 ? (
+                <div class="users-list">
+                  {searchResults.map((user) => (
+                    <a href={`/users/${user.username}`} class="user-card">
+                      <img
+                        src={user.avatar_url || "/default-avatar.png"}
+                        alt={user.username}
+                        class="user-avatar"
+                      />
+                      <div class="user-info">
+                        <h3>@{user.username}</h3>
+                        <p class="user-fullname">{user.full_name}</p>
+                        {user.bio && <p class="user-bio">{user.bio}</p>}
+                      </div>
+                    </a>
+                  ))}
+                </div>
+              ) : (
+                <div class="no-results">
+                  <p>No se encontraron usuarios para "{query}"</p>
+                </div>
+              )}
+            </div>
+          )
+        }
+      </div>
+    </main>
+  </div>
+</Layout>
+
+<style>
+  .search-page {
+    min-height: 100vh;
+    background: #f5f5f5;
+  }
+
+  .page-header {
+    padding: 1rem 2rem;
+    background: white;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+
+  .back-link {
+    color: #5f6ee7;
+    text-decoration: none;
+    font-weight: 500;
+  }
+
+  .search-main {
+    padding: 2rem;
+    max-width: 800px;
+    margin: 0 auto;
+  }
+
+  .search-container {
+    background: white;
+    padding: 2rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+
+  .search-form-large {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 2rem;
+  }
+
+  .search-input-large {
+    flex: 1;
+    padding: 0.75rem;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 1rem;
+  }
+
+  .search-btn-large {
+    padding: 0.75rem 1.5rem;
+    background: #5f6ee7;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+
+  .users-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .user-card {
+    display: flex;
+    gap: 1rem;
+    padding: 1rem;
+    border: 1px solid #eee;
+    border-radius: 8px;
+    text-decoration: none;
+    color: inherit;
+    transition: background-color 0.2s;
+  }
+
+  .user-card:hover {
+    background: #f9f9f9;
+  }
+
+  .user-avatar {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    object-fit: cover;
+  }
+
+  .user-info {
+    flex: 1;
+  }
+
+  .user-info h3 {
+    margin: 0 0 0.25rem 0;
+    color: #5f6ee7;
+  }
+
+  .user-fullname {
+    margin: 0 0 0.5rem 0;
+    color: #666;
+    font-weight: 500;
+  }
+
+  .user-bio {
+    margin: 0;
+    color: #777;
+    font-size: 0.9rem;
+    line-height: 1.4;
+  }
+
+  .no-results {
+    text-align: center;
+    padding: 2rem;
+    color: #666;
+  }
+</style>
