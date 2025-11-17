@@ -31,7 +31,27 @@ export async function POST({ request, cookies }) {
     }
 
     if (data.session) {
-      // Establecer cookies de sesión
+      // VERIFICAR que el usuario tenga perfil en la tabla profiles
+      const { data: profile, error: profileError } = await supabase
+        .from('profiles')
+        .select('id')
+        .eq('id', data.session.user.id)
+        .single()
+
+      // Si no existe perfil, mostrar error
+      if (profileError || !profile) {
+        // Cerrar sesión de auth ya que no hay perfil
+        await supabase.auth.signOut()
+        
+        return new Response(null, {
+          status: 302,
+          headers: {
+            'Location': '/login?error=Usuario no encontrado o perfil incompleto'
+          }
+        })
+      }
+
+      // Establecer cookies de sesión solo si existe el perfil
       cookies.set('sb-access-token', data.session.access_token, {
         path: '/',
         maxAge: 60 * 60 * 24 * 7, // 1 semana

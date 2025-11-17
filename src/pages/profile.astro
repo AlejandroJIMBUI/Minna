@@ -35,7 +35,7 @@ const message = Astro.url.searchParams.get("message");
         <div class="profile-header-section">
           <div class="avatar-section">
             <img
-              src={profile?.avatar_url || "/default-avatar.jpg"}
+              src={profile?.avatar_url || "/images/default-avatar.jpg"}
               alt="Avatar"
               class="profile-avatar"
               id="avatarPreview"
@@ -300,7 +300,7 @@ const message = Astro.url.searchParams.get("message");
           const formData = new FormData();
           formData.append("avatar", file);
 
-          const response = await fetch("/api/upload-avatar", {
+          const response = await fetch("/api/profile/upload-avatar", {
             method: "POST",
             body: formData,
           });
