@@ -1,0 +1,9 @@
+---
+const session = Astro.locals.session;
+
+if (session) {
+  return Astro.redirect("/dashboard");
+} else {
+  return Astro.redirect("/login");
+}
+---

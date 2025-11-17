@@ -1,31 +1,144 @@
 ---
+export interface Props {
+  title: string;
+  showHeader?: boolean;
+}
 
+const { title, showHeader = true } = Astro.props;
+const session = Astro.locals.session;
 ---
 
 <!doctype html>
 <html lang="es">
   <head>
     <meta charset="UTF-8" />
+    <meta name="description" content="Una red social moderna" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Minna</title>
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <title>{title}</title>
   </head>
   <body>
-    <div id="app">
+    {
+      showHeader && session && (
+        <header class="main-header">
+          <div class="header-content">
+            <a href="/" class="logo">
+              <h1>Minna</h1>
+            </a>
+
+            <div class="header-actions">
+              <form method="GET" action="/search" class="search-form">
+                <input
+                  type="text"
+                  name="q"
+                  placeholder="Buscar usuarios..."
+                  class="search-input"
+                />
+                <button type="submit" class="search-btn">
+                  Buscar
+                </button>
+              </form>
+              <nav class="header-nav">
+                <a href="/dashboard" class="nav-link">
+                  Dashboard
+                </a>
+                <a href="/profile" class="nav-link">
+                  Mi Perfil
+                </a>
+              </nav>
+            </div>
+          </div>
+        </header>
+      )
+    }
+
+    <main class={!showHeader ? "full-height" : ""}>
       <slot />
-    </div>
+    </main>
+
+    <style>
+      .main-header {
+        background: white;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        position: sticky;
+        top: 0;
+        z-index: 100;
+      }
+
+      .header-content {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 1rem 2rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      body {
+        margin: 0;
+        padding: 0;
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        background: #f5f5f5;
+        min-height: 100vh;
+      }
+
+      .logo {
+        text-decoration: none;
+        color: #5f6ee7;
+      }
+
+      .logo h1 {
+        margin: 0;
+        font-size: 1.5rem;
+      }
+
+      .header-actions {
+        display: flex;
+        align-items: center;
+        gap: 2rem;
+      }
+
+      .search-form {
+        display: flex;
+        gap: 0.5rem;
+      }
+
+      .search-input {
+        padding: 0.5rem 0.75rem;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        width: 250px;
+      }
+
+      .search-btn {
+        padding: 0.5rem 1rem;
+        background: #5f6ee7;
+        color: white;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+      }
+
+      .header-nav {
+        display: flex;
+        gap: 1rem;
+      }
+
+      .nav-link {
+        color: #333;
+        text-decoration: none;
+        padding: 0.5rem 1rem;
+        border-radius: 4px;
+        transition: background-color 0.2s;
+      }
+
+      .nav-link:hover {
+        background: #f5f5f5;
+      }
+
+      .full-height {
+        min-height: 100vh;
+      }
+    </style>
   </body>
 </html>
-
-<style>
-  body {
-    margin: 0;
-    padding: 0;
-    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-    background: #f5f5f5;
-    min-height: 100vh;
-  }
-
-  #app {
-    min-height: 100vh;
-  }
-</style>
