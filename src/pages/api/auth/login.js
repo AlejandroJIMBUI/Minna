@@ -11,7 +11,7 @@ export async function POST({ request, cookies }) {
       return new Response(null, {
         status: 302,
         headers: {
-          'Location': '/login?error=Email y contraseña son requeridos'
+          'Location': '/login?error=Email and password are required'
         }
       })
     }
@@ -31,30 +31,26 @@ export async function POST({ request, cookies }) {
     }
 
     if (data.session) {
-      // VERIFICAR que el usuario tenga perfil en la tabla profiles
       const { data: profile, error: profileError } = await supabase
         .from('profiles')
         .select('id')
         .eq('id', data.session.user.id)
         .single()
 
-      // Si no existe perfil, mostrar error
       if (profileError || !profile) {
-        // Cerrar sesión de auth ya que no hay perfil
         await supabase.auth.signOut()
         
         return new Response(null, {
           status: 302,
           headers: {
-            'Location': '/login?error=Usuario no encontrado o perfil incompleto'
+            'Location': '/login?error=User not found'
           }
         })
       }
 
-      // Establecer cookies de sesión solo si existe el perfil
       cookies.set('sb-access-token', data.session.access_token, {
         path: '/',
-        maxAge: 60 * 60 * 24 * 7, // 1 semana
+        maxAge: 60 * 60 * 24 * 7,
         httpOnly: true,
         secure: import.meta.env.PROD,
         sameSite: 'lax'
@@ -62,7 +58,7 @@ export async function POST({ request, cookies }) {
       
       cookies.set('sb-refresh-token', data.session.refresh_token, {
         path: '/',
-        maxAge: 60 * 60 * 24 * 7, // 1 semana
+        maxAge: 60 * 60 * 24 * 7,
         httpOnly: true,
         secure: import.meta.env.PROD,
         sameSite: 'lax'
@@ -81,7 +77,7 @@ export async function POST({ request, cookies }) {
     return new Response(null, {
       status: 302,
       headers: {
-        'Location': '/login?error=Error interno del servidor'
+        'Location': '/login?error=Internal Server Error'
       }
     })
   }

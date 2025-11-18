@@ -1,5 +1,6 @@
 ---
 const { error, message } = Astro.props;
+import "../../styles/CreatePostForm.css";
 ---
 
 <div class="create-post-form-container">
@@ -12,7 +13,7 @@ const { error, message } = Astro.props;
       <input
         type="text"
         name="title"
-        placeholder="Título de tu publicación"
+        placeholder="Title of your post"
         required
         class="post-title-input"
       />
@@ -21,166 +22,15 @@ const { error, message } = Astro.props;
     <div class="form-group">
       <textarea
         name="content"
-        placeholder="¿Qué quieres compartir con la comunidad? Escribe aquí tus pensamientos, ideas o experiencias..."
+        placeholder="What would you like to share with the community? Write your thoughts, ideas, or experiences here..."
         required
         rows="8"
         class="post-content-input"></textarea>
     </div>
 
     <div class="form-actions">
-      <a href="/dashboard" class="cancel-btn"> Cancelar </a>
-      <button type="submit" class="post-submit-btn">Publicar</button>
+      <a href="/dashboard" class="cancel-btn">Cancel</a>
+      <button type="submit" class="post-submit-btn">Post</button>
     </div>
   </form>
 </div>
-
-<style>
-  .create-post-form-container {
-    padding: 3rem;
-  }
-
-  .post-form {
-    display: flex;
-    flex-direction: column;
-    gap: 2rem;
-  }
-
-  .form-group {
-    display: flex;
-    flex-direction: column;
-  }
-
-  .post-title-input {
-    padding: 1.25rem;
-    border: 2px solid #e1e5e9;
-    border-radius: 8px;
-    font-size: 1.4rem;
-    font-weight: 600;
-    background: #f8f9fa;
-    transition: all 0.3s ease;
-  }
-
-  .post-title-input:focus {
-    outline: none;
-    border-color: #5f6ee7;
-    background: white;
-    box-shadow: 0 0 0 3px rgba(95, 110, 231, 0.1);
-  }
-
-  .post-content-input {
-    padding: 1.25rem;
-    border: 2px solid #e1e5e9;
-    border-radius: 8px;
-    font-size: 1.1rem;
-    resize: vertical;
-    font-family: inherit;
-    line-height: 1.6;
-    background: #f8f9fa;
-    min-height: 200px;
-    transition: all 0.3s ease;
-  }
-
-  .post-content-input:focus {
-    outline: none;
-    border-color: #5f6ee7;
-    background: white;
-    box-shadow: 0 0 0 3px rgba(95, 110, 231, 0.1);
-  }
-
-  .form-actions {
-    display: flex;
-    gap: 1rem;
-    justify-content: flex-end;
-    align-items: center;
-    margin-top: 1rem;
-  }
-
-  .cancel-btn {
-    padding: 0.875rem 1.75rem;
-    background: #6c757d;
-    color: white;
-    text-decoration: none;
-    border-radius: 8px;
-    font-size: 1rem;
-    font-weight: 500;
-    transition: all 0.3s ease;
-    border: none;
-    cursor: pointer;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-  }
-
-  .cancel-btn:hover {
-    background: #5a6268;
-    transform: translateY(-1px);
-    text-decoration: none;
-    color: white;
-  }
-
-  .post-submit-btn {
-    padding: 0.875rem 2rem;
-    background: #5f6ee7;
-    color: white;
-    border: none;
-    border-radius: 8px;
-    font-size: 1rem;
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.3s ease;
-  }
-
-  .post-submit-btn:hover {
-    background: #4c60aa;
-    transform: translateY(-1px);
-    box-shadow: 0 4px 12px rgba(95, 110, 231, 0.3);
-  }
-
-  .error-message {
-    background: #fee;
-    color: #c33;
-    padding: 1rem 1.25rem;
-    border-radius: 8px;
-    border: 1px solid #fcc;
-    margin-bottom: 1.5rem;
-    font-size: 1rem;
-  }
-
-  .success-message {
-    background: #efe;
-    color: #363;
-    padding: 1rem 1.25rem;
-    border-radius: 8px;
-    border: 1px solid #cfc;
-    margin-bottom: 1.5rem;
-    font-size: 1rem;
-  }
-
-  /* Responsive */
-  @media (max-width: 768px) {
-    .create-post-form-container {
-      padding: 2rem 1.5rem;
-    }
-
-    .post-title-input {
-      font-size: 1.2rem;
-      padding: 1rem;
-    }
-
-    .post-content-input {
-      font-size: 1rem;
-      padding: 1rem;
-    }
-
-    .form-actions {
-      flex-direction: column-reverse;
-      gap: 0.75rem;
-    }
-
-    .cancel-btn,
-    .post-submit-btn {
-      width: 100%;
-      text-align: center;
-    }
-  }
-</style>

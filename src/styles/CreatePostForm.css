@@ -1,0 +1,180 @@
+@import url(colors.css);
+
+.create-post-form-container {
+  padding: 3rem;
+  background: var(--black);
+}
+
+.post-form {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.post-title-input {
+  padding: 1.25rem;
+  border: 2px solid var(--otherblack);
+  border-radius: 8px;
+  font-size: 1.4rem;
+  font-weight: 600;
+  background: var(--otherblack);
+  color: var(--brightwhite);
+  transition: all 0.3s ease;
+  font-family: inherit;
+}
+
+.post-title-input::placeholder {
+  color: var(--brightblack);
+}
+
+.post-title-input:focus {
+  outline: none;
+  border-color: var(--brightcyan);
+  background: var(--otherblack);
+}
+
+.post-content-input {
+  padding: 1.25rem;
+  border: 2px solid var(--otherblack);
+  border-radius: 8px;
+  font-size: 1.1rem;
+  resize: vertical;
+  font-family: inherit;
+  line-height: 1.6;
+  background: var(--otherblack);
+  color: var(--brightwhite);
+  font-weight: 600px;
+  transition: all 0.3s ease;
+}
+
+.post-content-input::placeholder {
+  color: var(--brightblack);
+}
+
+.post-content-input:focus {
+  outline: none;
+  border-color: var(--brightcyan);
+  background: var(--otherblack);
+}
+
+.form-actions {
+  display: flex;
+  gap: 1rem;
+  justify-content: flex-end;
+  align-items: center;
+  margin-top: 1rem;
+}
+
+.cancel-btn {
+  padding: 0.875rem 2rem;
+  background: linear-gradient(135deg, var(--brightred) 0%, var(--red) 100%);
+  color: var(--brightwhite);
+  text-decoration: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  border: none;
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(252, 73, 52, 0.3);
+}
+
+.cancel-btn:hover {
+  transform: translateY(-2px);
+  text-decoration: none;
+  box-shadow: 0 4px 12px rgba(252, 73, 52, 0.4);
+}
+
+.post-submit-btn {
+  padding: 0.875rem 2rem;
+  background: linear-gradient(135deg, var(--brightblue) 0%, var(--blue) 100%);
+  color: var(--brightwhite);
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 8px rgba(137, 167, 155, 0.3);
+}
+
+.post-submit-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(137, 167, 155, 0.4);
+}
+
+.post-submit-btn:active {
+  transform: translateY(0);
+}
+
+.error-message {
+  background: rgba(252, 73, 52, 0.1);
+  color: var(--brightred);
+  padding: 1rem 1.25rem;
+  border-radius: 8px;
+  border: 1px solid var(--brightred);
+  margin-bottom: 1.5rem;
+  font-size: 1rem;
+  text-align: center;
+  font-weight: 500;
+}
+
+.success-message {
+  background: rgba(140, 191, 125, 0.1);
+  color: var(--brightcyan);
+  padding: 1rem 1.25rem;
+  border-radius: 8px;
+  border: 1px solid var(--brightcyan);
+  margin-bottom: 1.5rem;
+  font-size: 1rem;
+  text-align: center;
+  font-weight: 500;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .create-post-form-container {
+    padding: 2rem 1.5rem;
+  }
+
+  .post-title-input {
+    font-size: 1.2rem;
+    padding: 1rem;
+  }
+
+  .post-content-input {
+    font-size: 1rem;
+    padding: 1rem;
+  }
+
+  .form-actions {
+    flex-direction: column-reverse;
+    gap: 0.75rem;
+  }
+
+  .cancel-btn,
+  .post-submit-btn {
+    width: 100%;
+    text-align: center;
+  }
+}
+
+@media (max-width: 480px) {
+  .create-post-form-container {
+    padding: 1.5rem 1rem;
+  }
+
+  .post-title-input {
+    font-size: 1.1rem;
+  }
+
+  .post-content-input {
+    font-size: 0.95rem;
+    min-height: 150px;
+  }
+}

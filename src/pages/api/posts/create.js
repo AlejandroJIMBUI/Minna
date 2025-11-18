@@ -21,7 +21,7 @@ export async function POST({ request, cookies }) {
       return new Response(null, {
         status: 302,
         headers: {
-          'Location': '/create-post?error=Título y contenido son requeridos'
+          'Location': '/create-post?error=Title and content are required'
         }
       })
     }
@@ -43,7 +43,7 @@ export async function POST({ request, cookies }) {
       return new Response(null, {
         status: 302,
         headers: {
-          'Location': '/create-post?error=Error al crear la publicación'
+          'Location': '/create-post?error=Error creating post'
         }
       })
     }
@@ -51,7 +51,7 @@ export async function POST({ request, cookies }) {
     return new Response(null, {
       status: 302,
       headers: {
-        'Location': '/dashboard?message=Publicación creada exitosamente'
+        'Location': '/dashboard?message=Post successfully created'
       }
     })
 
@@ -60,7 +60,7 @@ export async function POST({ request, cookies }) {
     return new Response(null, {
       status: 302,
       headers: {
-        'Location': '/create-post?error=Error interno del servidor'
+        'Location': '/create-post?error=Internal Server Error'
       }
     })
   }

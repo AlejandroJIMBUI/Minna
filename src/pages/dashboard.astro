@@ -2,6 +2,7 @@
 export const prerender = false;
 import Layout from "../layouts/Layout.astro";
 import { supabase } from "../lib/supabase";
+import "../styles/dashboard.css";
 
 const session = Astro.locals.session;
 const user = Astro.locals.user;
@@ -10,7 +11,6 @@ if (!session || !user) {
   return Astro.redirect("/login");
 }
 
-// Obtener publicaciones con información de usuarios usando consulta separada
 const { data: posts } = await supabase
   .from("posts")
   .select("*")
@@ -20,14 +20,12 @@ const { data: posts } = await supabase
 let postsWithProfiles = [];
 
 if (posts && posts.length > 0) {
-  // Obtener información de perfiles por separado
   const userIds = [...new Set(posts.map((post) => post.user_id))];
   const { data: profiles } = await supabase
     .from("profiles")
     .select("id, username, full_name")
     .in("id", userIds);
 
-  // Combinar los datos
   postsWithProfiles = posts.map((post) => {
     const profile = profiles?.find((p) => p.id === post.user_id);
     return {
@@ -41,17 +39,14 @@ if (posts && posts.length > 0) {
 <Layout title="Dashboard">
   <div class="dashboard">
     <main class="dashboard-main">
-      <!-- Botón para crear publicación -->
       <div class="create-post-cta">
-        <h2>Bienvenido a tu Dashboard</h2>
-        <p>Comparte tus pensamientos con la comunidad</p>
-        <a href="/create-post" class="create-post-btn">
-          Crear Nueva Publicación
-        </a>
+        <h2>Welcome to your Dashboard</h2>
+        <p>Share your thoughts with the community</p>
+        <a href="/create-post" class="create-post-btn"> Create New Post </a>
       </div>
 
       <div class="posts-feed">
-        <h3>Publicaciones Recientes</h3>
+        <h3>Recent Publications</h3>
 
         {
           postsWithProfiles && postsWithProfiles.length > 0 ? (
@@ -87,9 +82,9 @@ if (posts && posts.length > 0) {
             </div>
           ) : (
             <div class="no-posts">
-              <p>Aún no hay publicaciones. ¡Sé el primero en publicar!</p>
+              <p>There are no posts yet. Be the first to post!</p>
               <a href="/create-post" class="create-post-link">
-                Crear primera publicación
+                Create first post
               </a>
             </div>
           )
@@ -98,120 +93,3 @@ if (posts && posts.length > 0) {
     </main>
   </div>
 </Layout>
-
-<style>
-  .dashboard {
-    min-height: 100vh;
-    background: #f5f5f5;
-  }
-
-  .dashboard-main {
-    padding: 2rem;
-    max-width: 800px;
-    margin: 0 auto;
-    display: flex;
-    flex-direction: column;
-    gap: 2rem;
-  }
-
-  .create-post-cta {
-    background: white;
-    padding: 2rem;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    text-align: center;
-    margin-top: 2rem;
-  }
-
-  .create-post-btn {
-    display: inline-block;
-    padding: 0.75rem 1.5rem;
-    background: #5f6ee7;
-    color: white;
-    text-decoration: none;
-    border-radius: 4px;
-    font-size: 1rem;
-    margin-top: 1rem;
-  }
-
-  .create-post-btn:hover {
-    background: #4c60aa;
-  }
-
-  .posts-feed {
-    background: white;
-    padding: 2rem;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  }
-
-  .posts-list {
-    display: flex;
-    flex-direction: column;
-    gap: 1.5rem;
-  }
-
-  .post-card {
-    padding: 1.5rem;
-    border: 1px solid #eee;
-    border-radius: 8px;
-    background: #fafafa;
-  }
-
-  .post-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 1rem;
-    font-size: 0.9rem;
-    color: #666;
-  }
-
-  .post-author {
-    font-weight: bold;
-  }
-
-  .post-title {
-    margin: 0 0 1rem 0;
-    color: #333;
-    font-size: 1.2rem;
-  }
-
-  .post-content {
-    margin: 0;
-    color: #555;
-    line-height: 1.5;
-  }
-
-  .post-image {
-    max-width: 100%;
-    border-radius: 4px;
-    margin-top: 1rem;
-  }
-
-  .no-posts {
-    text-align: center;
-    padding: 2rem;
-    color: #666;
-  }
-
-  .create-post-link {
-    color: #5f6ee7;
-    text-decoration: none;
-    font-weight: 500;
-  }
-
-  .create-post-link:hover {
-    text-decoration: underline;
-  }
-
-  .username-link {
-    color: #5f6ee7;
-    text-decoration: none;
-    font-weight: bold;
-  }
-
-  .username-link:hover {
-    text-decoration: underline;
-  }
-</style>
