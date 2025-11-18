@@ -13,12 +13,6 @@ const { error, message } = Astro.props;
   {error && <div class="error-message">{decodeURIComponent(error)}</div>}
   {message && <div class="success-message">{decodeURIComponent(message)}</div>}
 
-  {/* Mostrar mensajes de error */}
-  {error && <div class="error-message">{decodeURIComponent(error)}</div>}
-
-  {/* Mostrar mensajes de éxito (si los hay) */}
-  {message && <div class="success-message">{decodeURIComponent(message)}</div>}
-
   <form method="POST" action="/api/auth/login" class="auth-form">
     <div class="form-group">
       <label for="email">Email</label>
@@ -27,7 +21,7 @@ const { error, message } = Astro.props;
         id="email"
         name="email"
         required
-        placeholder="your@email.com"
+        placeholder="Your@email.com"
       />
     </div>
 
