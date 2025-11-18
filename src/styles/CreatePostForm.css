@@ -161,6 +161,10 @@
   .post-submit-btn {
     width: 100%;
     text-align: center;
+    margin: 0 0.5rem;
+    /* Agregado: margen lateral para separar de los bordes */
+    box-sizing: border-box;
+    /* Agregado: asegura que el padding se incluya en el ancho */
   }
 }
 
@@ -176,5 +180,11 @@
   .post-content-input {
     font-size: 0.95rem;
     min-height: 150px;
+  }
+
+  .cancel-btn,
+  .post-submit-btn {
+    margin: 0 0.25rem;
+    /* Agregado: margen reducido para pantallas muy pequeñas */
   }
 }
