@@ -23,7 +23,33 @@ export async function POST({ request, cookies }) {
       return new Response(null, {
         status: 302,
         headers: {
-          'Location': '/profile?error=Username y nombre completo son requeridos'
+          'Location': '/profile?error=Username and full name are required&from=profile'
+        }
+      })
+    }
+
+    const { data: existingUser, error: checkError } = await supabase
+      .from('profiles')
+      .select('id, username')
+      .eq('username', username)
+      .neq('id', session.data.session.user.id)
+      .single()
+
+    if (checkError && checkError.code !== 'PGRST116') {
+      console.error('Error checking username:', checkError)
+      return new Response(null, {
+        status: 302,
+        headers: {
+          'Location': '/profile?error=Error checking username availability&from=profile'
+        }
+      })
+    }
+
+    if (existingUser) {
+      return new Response(null, {
+        status: 302,
+        headers: {
+          'Location': `/profile?error=Username "${username}" is already taken&from=profile`
         }
       })
     }
@@ -34,17 +60,27 @@ export async function POST({ request, cookies }) {
         username: username,
         full_name: fullName,
         bio: bio,
-        avatar_url: avatar_url || null, // Usar null si está vacío
+        avatar_url: avatar_url || null,
         updated_at: new Date().toISOString()
       })
       .eq('id', session.data.session.user.id)
 
     if (error) {
       console.error('Error updating profile:', error)
+      
+      if (error.code === '23505') {
+        return new Response(null, {
+          status: 302,
+          headers: {
+            'Location': '/profile?error=Username is already taken&from=profile'
+          }
+        })
+      }
+      
       return new Response(null, {
         status: 302,
         headers: {
-          'Location': '/profile?error=Error al actualizar el perfil'
+          'Location': '/profile?error=Error updating profile&from=profile'
         }
       })
     }
@@ -52,7 +88,7 @@ export async function POST({ request, cookies }) {
     return new Response(null, {
       status: 302,
       headers: {
-        'Location': '/profile?message=Perfil actualizado exitosamente'
+        'Location': '/profile?message=Profile updated successfully&from=profile'
       }
     })
 
@@ -61,7 +97,7 @@ export async function POST({ request, cookies }) {
     return new Response(null, {
       status: 302,
       headers: {
-        'Location': '/profile?error=Error interno del servidor'
+        'Location': '/profile?error=Internal Server Error&from=profile'
       }
     })
   }

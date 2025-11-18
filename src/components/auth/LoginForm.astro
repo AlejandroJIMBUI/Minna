@@ -1,129 +1,50 @@
 ---
-// Componente de login que usa TU lógica de supabase.js
+import "../../styles/LoginForm.css";
+
 const { error, message } = Astro.props;
 ---
 
 <div class="auth-form-container">
-  <h2>Iniciar Sesión</h2>
+  <h2 class="form-title">Login</h2>
 
-  {/* Mostrar mensajes de error */}
+  {/* Debug: Mostrar los valores para verificar */}
+  <!-- {console.log('Error:', error, 'Message:', message)} -->
+
   {error && <div class="error-message">{decodeURIComponent(error)}</div>}
-
-  {/* Mostrar mensajes de éxito (si los hay) */}
   {message && <div class="success-message">{decodeURIComponent(message)}</div>}
 
   <form method="POST" action="/api/auth/login" class="auth-form">
     <div class="form-group">
-      <label for="email">Correo electrónico</label>
+      <label for="email">Email</label>
       <input
         type="email"
         id="email"
         name="email"
         required
-        placeholder="tu@email.com"
+        placeholder="Your@email.com"
       />
     </div>
 
     <div class="form-group">
-      <label for="password">Contraseña</label>
+      <label for="password">Password</label>
       <input
         type="password"
         id="password"
         name="password"
         required
-        placeholder="Tu contraseña"
+        placeholder="Your password"
         minlength="6"
       />
     </div>
 
-    <button type="submit" class="auth-button"> Iniciar Sesión </button>
+    <button type="submit" class="auth-button">Login</button>
   </form>
 
   <div class="auth-links">
     <p>
-      ¿No tienes cuenta? <a href="/register" class="auth-link"
-        >Regístrate aquí</a
+      Don't you have an account? <a href="/register" class="auth-link"
+        >Register here</a
       >
-    </p>
-    <p>
-      <a href="/forgot-password" class="auth-link">¿Olvidaste tu contraseña?</a>
     </p>
   </div>
 </div>
-
-<style>
-  /* Tus estilos CSS aquí */
-  .auth-form-container {
-    max-width: 400px;
-    width: 100%;
-    background: white;
-    padding: 2rem;
-    border-radius: 8px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  }
-
-  .form-group {
-    display: flex;
-    flex-direction: column;
-    margin-bottom: 1rem;
-  }
-
-  .form-group label {
-    margin-bottom: 0.5rem;
-    font-weight: 500;
-  }
-
-  .form-group input {
-    padding: 0.75rem;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    font-size: 1rem;
-  }
-
-  .auth-button {
-    padding: 0.75rem;
-    background: #5f6ee7;
-    color: white;
-    border: none;
-    border-radius: 4px;
-    font-size: 1rem;
-    cursor: pointer;
-    transition: background 0.2s;
-  }
-
-  .auth-button:hover {
-    background: #4c60aa;
-  }
-
-  .auth-button:disabled {
-    background: #ccc;
-    cursor: not-allowed;
-  }
-
-  .error-message {
-    background: #fee;
-    color: #c33;
-    padding: 0.75rem;
-    border-radius: 4px;
-    border: 1px solid #fcc;
-    margin-bottom: 1rem;
-  }
-
-  .success-message {
-    background: #efe;
-    color: #363;
-    padding: 0.75rem;
-    border-radius: 4px;
-    border: 1px solid #cfc;
-    margin-bottom: 1rem;
-  }
-
-  .auth-link {
-    color: #5f6ee7;
-    text-decoration: none;
-  }
-
-  .auth-link:hover {
-    text-decoration: underline;
-  }
-</style>

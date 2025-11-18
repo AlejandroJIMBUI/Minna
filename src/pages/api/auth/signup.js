@@ -9,19 +9,32 @@ export async function POST({ request, cookies }) {
     const username = formData.get('username')
     const fullName = formData.get('fullName')
 
-    console.log('Datos recibidos:', { email, username, fullName })
+    console.log('Data received:', { email, username, fullName })
 
-    // Validar campos requeridos
     if (!email || !password || !username || !fullName) {
       return new Response(null, {
         status: 302,
         headers: {
-          'Location': '/register?error=Todos los campos son requeridos'
+          'Location': '/register?error=All fields are required'
         }
       })
     }
 
-    // 1. Registrar usuario en Auth (sin verificación de email)
+    const { data: existingUser, error: usernameError } = await supabase
+      .from('profiles')
+      .select('username')
+      .eq('username', username)
+      .single()
+
+    if (existingUser) {
+      return new Response(null, {
+        status: 302,
+        headers: {
+          'Location': '/register?error=The username is already in use'
+        }
+      })
+    }
+
     const { data: authData, error: authError } = await supabase.auth.signUp({
       email,
       password,
@@ -29,14 +42,12 @@ export async function POST({ request, cookies }) {
         data: {
           username: username,
           full_name: fullName
-        },
-        // Esto evita que se envíe el email de verificación
-        emailRedirectTo: `${request.headers.get('origin')}/dashboard`
+        }
       }
     })
 
     if (authError) {
-      console.error('Error de auth:', authError)
+      console.error('Auth error:', authError)
       return new Response(null, {
         status: 302,
         headers: {
@@ -45,7 +56,6 @@ export async function POST({ request, cookies }) {
       })
     }
 
-    // 2. Crear perfil en la tabla profiles
     if (authData.user) {
       const { error: profileError } = await supabase
         .from('profiles')
@@ -60,29 +70,34 @@ export async function POST({ request, cookies }) {
         ])
 
       if (profileError) {
-        console.error('Error creando perfil:', profileError)
+        console.error('Error creating profile:', profileError)
+        
+        await supabase.auth.admin.deleteUser(authData.user.id)
+        
+        return new Response(null, {
+          status: 302,
+          headers: {
+            'Location': `/register?error=${encodeURIComponent('Error creating profile: ' + profileError.message)}`
+          }
+        })
       }
-    }
 
-    // 3. Iniciar sesión automáticamente después del registro
-    if (authData.user) {
       const { data: sessionData, error: signInError } = await supabase.auth.signInWithPassword({
         email,
         password,
       })
 
       if (signInError) {
-        console.error('Error al iniciar sesión:', signInError)
+        console.error('Login error:', signInError)
         return new Response(null, {
           status: 302,
           headers: {
-            'Location': '/login?message=Registro exitoso. Ahora puedes iniciar sesión.'
+            'Location': '/login?message=Registration successful. Please log in.'
           }
         })
       }
 
       if (sessionData.session) {
-        // Establecer cookies de sesión
         cookies.set('sb-access-token', sessionData.session.access_token, {
           path: '/',
           maxAge: 60 * 60 * 24 * 7,
@@ -99,7 +114,6 @@ export async function POST({ request, cookies }) {
           sameSite: 'lax'
         })
 
-        // Redirigir al dashboard
         return new Response(null, {
           status: 302,
           headers: {
@@ -109,11 +123,10 @@ export async function POST({ request, cookies }) {
       }
     }
 
-    // Fallback: redirigir al login
     return new Response(null, {
       status: 302,
       headers: {
-        'Location': '/login?message=Registro exitoso'
+        'Location': '/login?message=Registration successful. You can now log in.'
       }
     })
 
@@ -122,7 +135,7 @@ export async function POST({ request, cookies }) {
     return new Response(null, {
       status: 302,
       headers: {
-        'Location': `/register?error=${encodeURIComponent('Error interno del servidor')}`
+        'Location': `/register?error=${encodeURIComponent('Internal Server Error: ' + error.message)}`
       }
     })
   }

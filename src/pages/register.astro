@@ -1,12 +1,16 @@
 ---
 import Layout from "../layouts/Layout.astro";
 import SignUpForm from "../components/auth/SignUpForm.astro";
+
+const url = new URL(Astro.request.url);
+const error = url.searchParams.get("error");
+const message = url.searchParams.get("message");
 ---
 
-<Layout title="Registrarse" showHeader={false}>
+<Layout title="Register" showHeader={false}>
   <div class="auth-page">
     <main class="auth-main">
-      <SignUpForm />
+      <SignUpForm error={error} message={message} />
     </main>
   </div>
 </Layout>
@@ -14,7 +18,7 @@ import SignUpForm from "../components/auth/SignUpForm.astro";
 <style>
   .auth-page {
     min-height: 100vh;
-    background: #32313b;
+    background: #1e2021;
     display: flex;
     flex-direction: column;
   }

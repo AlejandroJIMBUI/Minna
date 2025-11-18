@@ -16,7 +16,7 @@ export async function POST({ cookies }) {
     })
   } catch (error) {
     return new Response(JSON.stringify({ 
-      error: 'Error al cerrar sesión' 
+      error: 'Logout error' 
     }), {
       status: 500,
       headers: { 'Content-Type': 'application/json' }

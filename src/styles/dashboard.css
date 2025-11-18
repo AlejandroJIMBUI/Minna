@@ -1,0 +1,246 @@
+@import url(colors.css);
+
+.dashboard {
+  min-height: 100vh;
+  background: var(--background);
+  padding: 2rem 1rem;
+}
+
+.dashboard-main {
+  max-width: 800px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.create-post-cta {
+  background: var(--black);
+  padding: 2.5rem;
+  border: 1px solid var(--yellow);
+  border-radius: 12px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+  text-align: center;
+  margin-top: 1rem;
+}
+
+.create-post-cta h2 {
+  margin: 0 0 0.5rem 0;
+  color: var(--brightcyan);
+  font-size: 1.8rem;
+  font-weight: 700;
+  background-image: linear-gradient(to right, var(--brightcyan), var(--brightblue));
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+}
+
+.create-post-cta p {
+  margin: 0;
+  color: var(--brightwhite);
+  font-size: 1.1rem;
+  opacity: 0.9;
+}
+
+.create-post-btn {
+  display: inline-block;
+  padding: 1rem 2rem;
+  background: linear-gradient(135deg, var(--brightblue) 0%, var(--blue) 100%);
+  color: var(--brightwhite);
+  text-decoration: none;
+  border-radius: 8px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin-top: 1.5rem;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 8px rgba(137, 167, 155, 0.3);
+  border: none;
+  cursor: pointer;
+}
+
+.create-post-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(137, 167, 155, 0.4);
+  text-decoration: none;
+  color: var(--brightwhite);
+}
+
+.posts-feed {
+  background: var(--black);
+  padding: 2rem;
+  border: 1px solid var(--yellow);
+  border-radius: 12px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+}
+
+.posts-feed h3 {
+  margin: 0 0 1.5rem 0;
+  text-align: center;
+  color: var(--brightwhite);
+  font-size: 1.5rem;
+  padding-bottom: 0.5rem;
+}
+
+.posts-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.post-card {
+  padding: 1.75rem;
+  border: 1px solid var(--otherblack);
+  border-radius: 8px;
+  background: var(--otherblack);
+  transition: all 0.3s ease;
+}
+
+.post-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+  font-size: 0.9rem;
+}
+
+.post-author {
+  font-weight: 600;
+}
+
+.post-date {
+  color: var(--brightblack);
+  font-size: 0.85rem;
+}
+
+.post-title {
+  margin: 0 0 1rem 0;
+  color: var(--brightwhite);
+  font-size: 1.3rem;
+  font-weight: 600;
+  line-height: 1.3;
+}
+
+.post-content {
+  margin: 0;
+  color: var(--brightwhite);
+  line-height: 1.6;
+  opacity: 0.9;
+}
+
+.post-media {
+  margin-top: 1rem;
+}
+
+.post-image {
+  max-width: 100%;
+  border-radius: 8px;
+  border: 1px solid var(--otherblack);
+}
+
+.no-posts {
+  text-align: center;
+  padding: 3rem 2rem;
+  color: var(--brightblack);
+  font-style: italic;
+}
+
+.no-posts p {
+  margin: 0 0 1rem 0;
+  font-size: 1.1rem;
+  opacity: 0.8;
+}
+
+/* ENLACE NORMAL (no botón) */
+.create-post-link {
+  color: var(--brightblue);
+  text-decoration: none;
+  font-weight: 600;
+  transition: color 0.3s ease;
+  font-size: 1rem;
+}
+
+.create-post-link:hover {
+  color: var(--brightcyan);
+  text-decoration: underline;
+}
+
+.username-link {
+  color: var(--brightcyan);
+  text-decoration: none;
+  font-weight: 600;
+  transition: color 0.3s ease;
+}
+
+.username-link:hover {
+  color: var(--brightblue);
+  text-decoration: underline;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .dashboard {
+    padding: 1rem;
+  }
+
+  .dashboard-main {
+    gap: 1.5rem;
+  }
+
+  .create-post-cta {
+    padding: 2rem 1.5rem;
+    margin-top: 0;
+  }
+
+  .create-post-cta h2 {
+    font-size: 1.5rem;
+  }
+
+  .create-post-cta p {
+    font-size: 1rem;
+  }
+
+  .posts-feed {
+    padding: 1.5rem;
+  }
+
+  .post-card {
+    padding: 1.25rem;
+  }
+
+  .post-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+
+  .post-title {
+    font-size: 1.2rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .create-post-cta {
+    padding: 1.5rem 1rem;
+  }
+
+  .create-post-cta h2 {
+    font-size: 1.3rem;
+  }
+
+  .posts-feed {
+    padding: 1rem;
+  }
+
+  .post-card {
+    padding: 1rem;
+  }
+
+  .post-title {
+    font-size: 1.1rem;
+  }
+
+  .post-content {
+    font-size: 0.95rem;
+  }
+}
