@@ -67,7 +67,9 @@ if (posts && posts.length > 0) {
                     </span>
                   </div>
                   <h4 class="post-title">{post.title}</h4>
-                  <p class="post-content">{post.content}</p>
+                  <p class="post-content" style="white-space: pre-line;">
+                    {post.content}
+                  </p>
                   {post.media_url && (
                     <div class="post-media">
                       <img

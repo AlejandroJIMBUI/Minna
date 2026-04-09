@@ -73,7 +73,6 @@
 .user-card:hover {
   border-color: var(--brightcyan);
   transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(140, 191, 125, 0.2);
   text-decoration: none;
 }
 

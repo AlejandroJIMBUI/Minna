@@ -81,13 +81,11 @@
   transition: all 0.3s ease;
   border: none;
   cursor: pointer;
-  box-shadow: 0 2px 8px rgba(252, 73, 52, 0.3);
 }
 
 .cancel-btn:hover {
   transform: translateY(-2px);
   text-decoration: none;
-  box-shadow: 0 4px 12px rgba(252, 73, 52, 0.4);
 }
 
 .post-submit-btn {
@@ -100,12 +98,10 @@
   font-weight: 600;
   cursor: pointer;
   transition: all 0.3s ease;
-  box-shadow: 0 2px 8px rgba(137, 167, 155, 0.3);
 }
 
 .post-submit-btn:hover {
   transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(137, 167, 155, 0.4);
 }
 
 .post-submit-btn:active {

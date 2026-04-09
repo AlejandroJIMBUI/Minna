@@ -17,13 +17,9 @@
 
 <br>
 
-**[ESP]**
-Minna es un blog desarrollado como proyecto académico para mi curso de Metodologías de Desarrollo. Esta aplicación web permite a los usuarios leer, crear y gestionar publicaciones de blog.
+Minna is a web application developed using the [Astro](https://astro.build/) framework and deployed on the [Vercel](https://vercel.com/home) platform, allowing users to read, create, and manage blog posts.
 
-**[ENG]**
-Minna is a blog developed as an academic project for my Development Methodologies course. This web application allows users to read, create, and manage blog posts.
-
-<br>
+Minna is still under development; check out the list of features to be developed [TODO](TODO.md)
 
 <div align="center">
 
