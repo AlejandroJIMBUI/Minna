@@ -46,7 +46,9 @@ const { data: userPosts } = await supabase
           profile.bio && (
             <div class="bio-section">
               <h3>Biography</h3>
-              <p class="bio-text">{profile.bio}</p>
+              <p class="bio-text" style="white-space: pre-line;">
+                {profile.bio}
+              </p>
             </div>
           )
         }
@@ -75,7 +77,9 @@ const { data: userPosts } = await supabase
                     </span>
                   </div>
                   <h3 class="post-title">{post.title}</h3>
-                  <p class="post-content">{post.content}</p>
+                  <p class="post-content" style="white-space: pre-line;">
+                    {post.content}
+                  </p>
                 </article>
               ))}
             </div>

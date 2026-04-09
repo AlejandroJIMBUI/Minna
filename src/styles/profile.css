@@ -41,7 +41,6 @@
   border-radius: 50%;
   object-fit: cover;
   border: 3px solid var(--brightyellow);
-  box-shadow: 0 4px 12px rgba(215, 153, 32, 0.3);
   transition: transform 0.3s ease;
 }
 
@@ -87,12 +86,10 @@
   cursor: pointer;
   transition: all 0.3s ease;
   font-weight: 500;
-  box-shadow: 0 2px 8px rgba(137, 167, 155, 0.3);
 }
 
 .edit-profile-btn:hover {
   transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(137, 167, 155, 0.4);
 }
 
 .logout-form {
@@ -108,12 +105,10 @@
   cursor: pointer;
   transition: all 0.3s ease;
   font-weight: 500;
-  box-shadow: 0 2px 8px rgba(252, 73, 52, 0.3);
 }
 
 .logout-btn:hover {
   transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(252, 73, 52, 0.4);
 }
 
 .bio-section {
@@ -195,7 +190,6 @@
 
 .avatar-upload-label:hover {
   transform: translateY(-1px);
-  box-shadow: 0 4px 12px rgba(137, 167, 155, 0.4);
 }
 
 .upload-info {
@@ -220,7 +214,6 @@
 
 .delete-avatar-btn:hover {
   transform: translateY(-1px);
-  box-shadow: 0 4px 12px rgba(252, 73, 52, 0.4);
 }
 
 .form-group {
@@ -343,12 +336,10 @@
   align-items: center;
   justify-content: center;
   transition: all 0.3s ease;
-  box-shadow: 0 2px 8px rgba(252, 73, 52, 0.3);
 }
 
 .delete-post-btn:hover {
   transform: scale(1.1);
-  box-shadow: 0 4px 12px rgba(252, 73, 52, 0.4);
   background: linear-gradient(135deg, #ff2e1a 0%, #cc0000 100%);
 }
 
