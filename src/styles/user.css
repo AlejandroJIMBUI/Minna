@@ -41,7 +41,6 @@
   border-radius: 50%;
   object-fit: cover;
   border: 3px solid var(--brightyellow);
-  box-shadow: 0 4px 12px rgba(215, 153, 32, 0.3);
   transition: transform 0.3s ease;
 }
 

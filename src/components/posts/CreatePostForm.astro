@@ -4,11 +4,11 @@ import "../../styles/CreatePostForm.css";
 ---
 
 <div class="create-post-form-container">
+  <!--Obtain sucess/error messages-->
   {error && <div class="error-message">{decodeURIComponent(error)}</div>}
-
   {message && <div class="success-message">{decodeURIComponent(message)}</div>}
-
   <form method="POST" action="/api/posts/create" class="post-form">
+    <!--Post tittle-->
     <div class="form-group">
       <input
         type="text"
@@ -18,19 +18,92 @@ import "../../styles/CreatePostForm.css";
         class="post-title-input"
       />
     </div>
-
     <div class="form-group">
-      <textarea
-        name="content"
-        placeholder="What would you like to share with the community? Write your thoughts, ideas, or experiences here..."
-        required
-        rows="8"
-        class="post-content-input"></textarea>
-    </div>
+      <!--Tabs for switching between edit/preview-->
+      <div class="editor-tabs">
+        <button type="button" class="tab-btn active" data-tab="write"
+          >Write</button
+        >
+        <button type="button" class="tab-btn" data-tab="preview">Preview</button
+        >
+      </div>
 
+      <!--Write panel-->
+      <div id="write-panel">
+        <textarea
+          id="content"
+          name="content"
+          placeholder="What would you like to share with the community? Write your thoughts, ideas, or experiences here..."
+          required
+          rows="8"
+          class="post-content-input"></textarea>
+      </div>
+
+      <!--Preview BBCode panel-->
+      <div id="preview-panel" class="bbcode-content" style="display:none;">
+        <em class="preview-placeholder">Preview will appear here...</em>
+      </div>
+    </div>
     <div class="form-actions">
       <a href="/dashboard" class="cancel-btn">Cancel</a>
       <button type="submit" class="post-submit-btn">Post</button>
     </div>
   </form>
 </div>
+
+<script>
+  //import bbob modules
+  import bbobHTML from "@bbob/html";
+  import presetHTML5 from "@bbob/preset-html5";
+  import DOMPurify from "dompurify";
+
+  //References to DOM elements
+  const writePanel = document.getElementById("write-panel")!;
+  const previewPanel = document.getElementById("preview-panel")!;
+  const textarea = document.getElementById("content") as HTMLTextAreaElement;
+  const tabBtns = document.querySelectorAll<HTMLButtonElement>(".tab-btn");
+
+  tabBtns.forEach((btn) => {
+    //Click event for each tab button
+    btn.addEventListener("click", () => {
+      tabBtns.forEach((b) => b.classList.remove("active"));
+      btn.classList.add("active");
+
+      //if (active tab = preview)
+      //  show(preview)
+      //  hide(write)
+      if (btn.dataset.tab === "preview") {
+        writePanel.style.display = "none";
+        previewPanel.style.display = "block";
+
+        // change for #20: withBreaks --> [br]
+        // Primero convierte el texto manteniendo los saltos de línea originales
+        let processedContent = textarea.value;
+
+        //BBCode --> HTML
+        const raw = bbobHTML(processedContent, presetHTML5(), {
+          enableEscapeTags: true,
+        });
+
+        // AHORA reemplaza los saltos de línea con <br>, pero asegura que no haya dobles
+        const withBreaks = raw
+          .replace(/\n/g, "<br>")
+          .replace(/<br>\s*<br>/g, "<br>"); // Elimina <br> duplicados
+
+        //Convert BBCode --> HTML
+        const safe = DOMPurify.sanitize(withBreaks);
+
+        //if (previewPanel = 0)
+        previewPanel.innerHTML =
+          safe ||
+          "<em class='preview-placeholder'>Nothing to preview yet...</em>";
+      } else {
+        //if (active tab = write)
+        //  show(write)
+        //  hide(preview)
+        writePanel.style.display = "block";
+        previewPanel.style.display = "none";
+      }
+    });
+  });
+</script>

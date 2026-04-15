@@ -8,8 +8,8 @@
 
 - [ ] Publications
   - [ ] Add a side menu with options to post, view saved items, view followed accounts, etc.
-  - [x] Line break in publications
-  - [ ] BBCode support
+  - [x] Line break in publications (replaced by bbcode support)
+  - [x] BBCode support
   - [ ] Comments
 
 - [ ] Register and Log In
