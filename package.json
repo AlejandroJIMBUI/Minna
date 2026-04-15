@@ -10,7 +10,7 @@
     "astro": "astro"
   },
   "dependencies": {
-    "@astrojs/vercel": "^10.0.4",
+    "@astrojs/vercel": "^8.0.4",
     "@bbob/html": "^4.3.1",
     "@bbob/preset-html5": "^4.3.1",
     "@supabase/ssr": "^0.10.2",
