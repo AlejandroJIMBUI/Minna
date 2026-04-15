@@ -16,7 +16,7 @@
     "@supabase/ssr": "^0.10.2",
     "@supabase/supabase-js": "^2.103.0",
     "@vercel/speed-insights": "^2.0.0",
-    "astro": "^6.1.6",
+    "astro": "^5.13.10",
     "date-fns": "^4.1.0",
     "dompurify": "^3.4.0",
     "isomorphic-dompurify": "^3.9.0",
