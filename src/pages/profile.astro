@@ -2,7 +2,9 @@
 export const prerender = false;
 import Layout from "../layouts/Layout.astro";
 import { supabase } from "../lib/supabase";
+import { renderBBCode } from "../lib/bbcode";
 import "../styles/profile.css";
+import "../styles/bbcode.css";
 
 const session = Astro.locals.session;
 const user = Astro.locals.user;
@@ -217,9 +219,10 @@ const message = Astro.url.searchParams.get("message");
                     </span>
                   </div>
                   <h3 class="post-title">{post.title}</h3>
-                  <p class="post-content" style="white-space: pre-line;">
-                    {post.content}
-                  </p>
+                  <div
+                    class="post-content bbcode-content"
+                    set:html={renderBBCode(post.content)}
+                  />
                 </article>
               ))}
             </div>

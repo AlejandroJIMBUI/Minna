@@ -2,7 +2,9 @@
 export const prerender = false;
 import Layout from "../../layouts/Layout.astro";
 import { supabase } from "../../lib/supabase";
+import { renderBBCode } from "../../lib/bbcode";
 import "../../styles/user.css";
+import "../../styles/bbcode.css";
 
 const { username } = Astro.params;
 const session = Astro.locals.session;
@@ -77,9 +79,10 @@ const { data: userPosts } = await supabase
                     </span>
                   </div>
                   <h3 class="post-title">{post.title}</h3>
-                  <p class="post-content" style="white-space: pre-line;">
-                    {post.content}
-                  </p>
+                  <div
+                    class="post-content bbcode-content"
+                    set:html={renderBBCode(post.content)}
+                  />
                 </article>
               ))}
             </div>

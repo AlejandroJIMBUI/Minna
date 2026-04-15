@@ -1,0 +1,102 @@
+@import url(colors.css);
+
+/* Estilos del HTML generado por BBCode */
+.bbcode-content b,
+.bbcode-content strong {
+  font-weight: 700;
+}
+
+.bbcode-content i,
+.bbcode-content em {
+  font-style: italic;
+}
+
+.bbcode-content u {
+  text-decoration: underline;
+}
+
+.bbcode-content s {
+  text-decoration: line-through;
+}
+
+.bbcode-content a {
+  color: var(--brightblue);
+  text-decoration: none;
+  font-weight: 600;
+  transition: color 0.3s ease;
+}
+
+.bbcode-content a:hover {
+  color: var(--brightcyan);
+  text-decoration: underline;
+}
+
+.bbcode-content blockquote {
+  border-left: 3px solid #ccc;
+  margin: 0.5rem 0;
+  padding: 0.4rem 0.8rem;
+  color: #666;
+  background: #f9f9f9;
+  border-radius: 0 4px 4px 0;
+}
+
+.bbcode-content pre,
+.bbcode-content code {
+  font-family: "Fira Code", monospace;
+  background: #1e1e1e;
+  color: #d4d4d4;
+  border-radius: 4px;
+  font-size: 0.88em;
+}
+
+.bbcode-content code {
+  padding: 0.1em 0.4em;
+}
+
+.bbcode-content pre {
+  padding: 0.8rem 1rem;
+  overflow-x: auto;
+}
+
+.bbcode-content ul,
+.bbcode-content ol {
+  padding-left: 1.5rem;
+  margin: 0.4rem 0;
+}
+
+.bbcode-content img {
+  max-width: 100%;
+  border-radius: 6px;
+  margin: 0.4rem 0;
+}
+
+/* Tabs del editor */
+.editor-tabs {
+  display: flex;
+  gap: 0.25rem;
+  margin-bottom: 0.5rem;
+}
+
+.tab-btn {
+  padding: 0.35rem 0.9rem;
+  border: 1px solid #ccc;
+  border-radius: 4px 4px 0 0;
+  background: #f5f5f5;
+  cursor: pointer;
+  font-size: 0.875rem;
+  border-bottom: none;
+}
+
+.tab-btn.active {
+  background: white;
+  font-weight: 600;
+  border-bottom: 2px solid white;
+  margin-bottom: -1px;
+}
+
+.bbcode-hint {
+  display: block;
+  margin-top: 0.3rem;
+  font-size: 0.75rem;
+  color: #888;
+}
