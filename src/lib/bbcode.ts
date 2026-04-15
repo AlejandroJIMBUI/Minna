@@ -11,7 +11,7 @@ export function renderBBCode(input: string): string {
     enableEscapeTags: true, //Escape HTML tags that are not BBCode
   });
 
-  //Convert line breaks to [br] so that pressing Enter creates a visible line break
+  //Convert line breaks to <br> so that pressing Enter creates a visible line break
   const withBreaks = rawHTML
     .replace(/\n/g, "<br>")           //ENTER --> <br>
     .replace(/<br>\s*<br>/g, "<br>"); //dlt <br> duplicates
@@ -42,6 +42,6 @@ export function renderBBCode(input: string): string {
     }
   );
   */
- 
+
   return clean;
 }
